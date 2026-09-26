@@ -13,20 +13,17 @@ class CalendarHeader extends StatelessWidget {
       height: compact ? 184 : 300,
       child: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            bottom: 0,
-            width: MediaQuery.sizeOf(context).width.clamp(280, 390) * .82,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFF123E36), AppColors.forestDark],
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(94),
+          Positioned.fill(
+            child: ClipPath(
+              clipper: const _HeaderShapeClipper(),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF17483F), AppColors.forestDark],
+                    stops: [0, .88],
+                  ),
                 ),
               ),
             ),
@@ -34,9 +31,9 @@ class CalendarHeader extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(
               compact ? 20 : 26,
-              compact ? 12 : 18,
+              compact ? 9 : 18,
               compact ? 20 : 26,
-              compact ? 6 : 10,
+              compact ? 3 : 10,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +68,7 @@ class CalendarHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: compact ? 10 : 34),
+                SizedBox(height: compact ? 6 : 34),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -82,8 +79,8 @@ class CalendarHeader extends StatelessWidget {
                     ),
                     const Spacer(),
                     Container(
-                      width: compact ? 34 : 46,
-                      height: compact ? 34 : 46,
+                      width: compact ? 32 : 46,
+                      height: compact ? 32 : 46,
                       decoration: BoxDecoration(
                         color: AppColors.cream,
                         shape: BoxShape.circle,
@@ -97,12 +94,12 @@ class CalendarHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: compact ? 5 : 12),
+                SizedBox(height: compact ? 3 : 12),
                 Text(
                   'Septiembre',
                   style: TextStyle(
                     color: AppColors.white,
-                    fontSize: compact ? 28 : 38,
+                    fontSize: compact ? 27 : 38,
                     height: 1,
                     fontWeight: FontWeight.w500,
                     letterSpacing: -.8,
@@ -112,7 +109,7 @@ class CalendarHeader extends StatelessWidget {
                   '2026',
                   style: TextStyle(
                     color: AppColors.terracotta,
-                    fontSize: compact ? 38 : 52,
+                    fontSize: compact ? 36 : 52,
                     height: 1.08,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.5,
@@ -134,4 +131,34 @@ class CalendarHeader extends StatelessWidget {
       ),
     );
   }
+}
+
+class _HeaderShapeClipper extends CustomClipper<Path> {
+  const _HeaderShapeClipper();
+
+  @override
+  Path getClip(Size size) {
+    return Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width * .64, 0)
+      ..cubicTo(
+        size.width * .64,
+        size.height * .2,
+        size.width * .6,
+        size.height * .42,
+        size.width * .54,
+        size.height * .66,
+      )
+      ..quadraticBezierTo(
+        size.width * .49,
+        size.height,
+        size.width * .31,
+        size.height,
+      )
+      ..lineTo(0, size.height)
+      ..close();
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

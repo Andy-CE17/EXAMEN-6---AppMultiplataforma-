@@ -12,7 +12,15 @@ class CalendarBottomNav extends StatelessWidget {
     return Container(
       height: compact ? 68 : 94,
       decoration: BoxDecoration(
-        color: AppColors.cream.withValues(alpha: .96),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            AppColors.cream.withValues(alpha: .98),
+            Colors.white.withValues(alpha: .93),
+            AppColors.cream.withValues(alpha: .98),
+          ],
+        ),
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(compact ? 28 : 38),
         ),
