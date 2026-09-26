@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../models/calendar_event.dart';
@@ -56,72 +57,193 @@ class CalendarScreen extends StatelessWidget {
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final isWide = constraints.maxWidth > 700;
-              return Center(
-                child: Container(
-                  width: isWide ? 470 : double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: .08),
-                    borderRadius: isWide
-                        ? BorderRadius.circular(38)
-                        : BorderRadius.zero,
-                    border: isWide
-                        ? Border.all(color: Colors.white.withValues(alpha: .22))
-                        : null,
-                    boxShadow: isWide
-                        ? [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: .55),
-                              blurRadius: 42,
-                              spreadRadius: 4,
-                            ),
-                          ]
-                        : null,
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: SafeArea(
-                    top: false,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              children: [
-                                const CalendarHeader(),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    18,
-                                    8,
-                                    18,
-                                    24,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const CalendarGrid(),
-                                      const SizedBox(height: 20),
-                                      const _EventsTitle(),
-                                      const SizedBox(height: 12),
-                                      ..._events.map(
-                                        (event) => EventCard(event: event),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const CalendarBottomNav(),
-                      ],
-                    ),
-                  ),
-                ),
+              final showPhoneFrame = kIsWeb
+                  ? constraints.maxWidth >= 420 && constraints.maxHeight >= 500
+                  : constraints.maxWidth >= 560 && constraints.maxHeight >= 650;
+              const content = _CalendarContent(events: _events);
+
+              if (!showPhoneFrame) {
+                return content;
+              }
+
+              return _PhoneFrame(
+                width: (constraints.maxWidth - 18).clamp(390, 500).toDouble(),
+                height: (constraints.maxHeight - 12).clamp(480, 940).toDouble(),
+                child: content,
               );
             },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _PhoneFrame extends StatelessWidget {
+  const _PhoneFrame({
+    required this.width,
+    required this.height,
+    required this.child,
+  });
+
+  final double width;
+  final double height;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(left: -4, top: 130, child: _SideButton(height: 58)),
+            Positioned(left: -4, top: 206, child: _SideButton(height: 82)),
+            Positioned(right: -4, top: 180, child: _SideButton(height: 104)),
+            Positioned.fill(
+              child: Container(
+                padding: const EdgeInsets.all(9),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF747875),
+                      Color(0xFF070807),
+                      Color(0xFF303330),
+                      Color(0xFF020302),
+                    ],
+                    stops: [0, .13, .6, 1],
+                  ),
+                  borderRadius: BorderRadius.circular(54),
+                  border: Border.all(
+                    color: const Color(0xFFB0B3AD),
+                    width: 1.5,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: .75),
+                      blurRadius: 46,
+                      spreadRadius: 8,
+                      offset: const Offset(0, 18),
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withValues(alpha: .16),
+                      blurRadius: 2,
+                      spreadRadius: 1,
+                      offset: const Offset(-2, -2),
+                    ),
+                  ],
+                ),
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(45),
+                    border: Border.all(
+                      color: Colors.black.withValues(alpha: .9),
+                      width: 2,
+                    ),
+                  ),
+                  child: child,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 15,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  width: 142,
+                  height: 29,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF020303),
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: .5),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: Align(
+                    alignment: const Alignment(.62, 0),
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF102923),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFF234E44)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SideButton extends StatelessWidget {
+  const _SideButton({required this.height});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 5,
+      height: height,
+      decoration: BoxDecoration(
+        color: const Color(0xFF111311),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: const Color(0xFF555955), width: .7),
+      ),
+    );
+  }
+}
+
+class _CalendarContent extends StatelessWidget {
+  const _CalendarContent({required this.events});
+
+  final List<CalendarEvent> events;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  const CalendarHeader(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                    child: Column(
+                      children: [
+                        const CalendarGrid(),
+                        const SizedBox(height: 20),
+                        const _EventsTitle(),
+                        const SizedBox(height: 12),
+                        ...events.map((event) => EventCard(event: event)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const CalendarBottomNav(),
+        ],
       ),
     );
   }
