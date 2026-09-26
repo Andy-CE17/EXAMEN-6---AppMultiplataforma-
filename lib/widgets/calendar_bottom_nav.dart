@@ -36,23 +36,49 @@ class CalendarBottomNav extends StatelessWidget {
           width: 1,
         ),
       ),
-      child: Row(
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
         children: [
-          _NavItem(
-            icon: Icons.calendar_month_rounded,
-            label: 'Calendario',
-            selected: true,
-            compact: compact,
+          Positioned.fill(
+            child: ClipPath(
+              clipper: const _SelectedSectionClipper(),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      const Color(0xFF351020).withValues(alpha: .82),
+                      const Color(0xFF170B18).withValues(alpha: .86),
+                      const Color(0xFF090A0F).withValues(alpha: .96),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-          _NavItem(
-            icon: Icons.format_list_bulleted_rounded,
-            label: 'Eventos',
-            compact: compact,
+          const Positioned.fill(
+            child: CustomPaint(painter: _SelectedSectionBorder()),
           ),
-          _NavItem(
-            icon: Icons.person_outline_rounded,
-            label: 'Perfil',
-            compact: compact,
+          Row(
+            children: [
+              _NavItem(
+                icon: Icons.calendar_month_rounded,
+                label: 'Calendario',
+                selected: true,
+                compact: compact,
+              ),
+              _NavItem(
+                icon: Icons.format_list_bulleted_rounded,
+                label: 'Eventos',
+                compact: compact,
+              ),
+              _NavItem(
+                icon: Icons.person_outline_rounded,
+                label: 'Perfil',
+                compact: compact,
+              ),
+            ],
           ),
         ],
       ),
@@ -76,25 +102,8 @@ class _NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: SizedBox(
         height: double.infinity,
-        decoration: selected
-            ? BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    const Color(0xFF3B1427).withValues(alpha: .82),
-                    const Color(0xFF110A17).withValues(alpha: .92),
-                  ],
-                ),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(58),
-                  bottomRight: Radius.circular(58),
-                  topLeft: Radius.circular(38),
-                ),
-              )
-            : null,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -119,7 +128,7 @@ class _NavItem extends StatelessWidget {
             SizedBox(height: compact ? 2 : 5),
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              width: selected ? (compact ? 40 : 55) : 0,
+              width: selected ? (compact ? 50 : 62) : 0,
               height: compact ? 2 : 3,
               decoration: BoxDecoration(
                 color: AppColors.terracotta,
@@ -131,4 +140,68 @@ class _NavItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class _SelectedSectionClipper extends CustomClipper<Path> {
+  const _SelectedSectionClipper();
+
+  @override
+  Path getClip(Size size) {
+    return Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width * .31, 0)
+      ..cubicTo(
+        size.width * .37,
+        0,
+        size.width * .37,
+        size.height * .73,
+        size.width * .47,
+        size.height,
+      )
+      ..lineTo(0, size.height)
+      ..close();
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
+
+class _SelectedSectionBorder extends CustomPainter {
+  const _SelectedSectionBorder();
+
+  Path _curve(Size size) {
+    return Path()
+      ..moveTo(size.width * .31, 0)
+      ..cubicTo(
+        size.width * .37,
+        0,
+        size.width * .37,
+        size.height * .73,
+        size.width * .47,
+        size.height,
+      );
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final curve = _curve(size);
+    final glow = Paint()
+      ..color = const Color(0xFFFF681F).withValues(alpha: .48)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 5
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 7);
+    final line = Paint()
+      ..shader = const LinearGradient(
+        colors: [Color(0xFFFFA11F), Color(0xFFFF541F)],
+      ).createShader(Offset.zero & size)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4;
+
+    canvas
+      ..drawPath(curve, glow)
+      ..drawPath(curve, line);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
