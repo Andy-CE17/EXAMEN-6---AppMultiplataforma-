@@ -66,10 +66,22 @@ class CalendarScreen extends StatelessWidget {
                 return content;
               }
 
-              return _PhoneFrame(
-                width: (constraints.maxWidth - 18).clamp(390, 500).toDouble(),
-                height: (constraints.maxHeight - 12).clamp(480, 940).toDouble(),
-                child: content,
+              final phoneWidth = (constraints.maxWidth - 56)
+                  .clamp(390, 500)
+                  .toDouble();
+              final phoneHeight = (phoneWidth * 1.82)
+                  .clamp(760, 920)
+                  .toDouble();
+
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(vertical: 28),
+                child: Center(
+                  child: _PhoneFrame(
+                    width: phoneWidth,
+                    height: phoneHeight,
+                    child: content,
+                  ),
+                ),
               );
             },
           ),
