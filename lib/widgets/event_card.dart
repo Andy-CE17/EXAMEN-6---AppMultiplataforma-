@@ -16,13 +16,9 @@ class EventCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: compact ? 6 : 12),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: const AssetImage('assets/images/calendar_background.png'),
+          image: AssetImage(event.backgroundImage),
           fit: BoxFit.cover,
-          alignment: switch (event.day) {
-            '05' => Alignment.topRight,
-            '12' => Alignment.centerRight,
-            _ => Alignment.bottomRight,
-          },
+          alignment: Alignment.center,
         ),
         borderRadius: BorderRadius.circular(compact ? 14 : 18),
         boxShadow: [
@@ -43,12 +39,12 @@ class EventCard extends StatelessWidget {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    AppColors.cream.withValues(alpha: .98),
-                    AppColors.cream.withValues(alpha: .88),
-                    Colors.white.withValues(alpha: .34),
-                    AppColors.cream.withValues(alpha: .42),
+                    AppColors.cream.withValues(alpha: .96),
+                    AppColors.cream.withValues(alpha: .86),
+                    AppColors.cream.withValues(alpha: .46),
+                    Colors.transparent,
                   ],
-                  stops: const [0, .38, .7, 1],
+                  stops: const [0, .36, .68, 1],
                 ),
               ),
             ),

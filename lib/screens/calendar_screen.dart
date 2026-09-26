@@ -18,8 +18,9 @@ class CalendarScreen extends StatelessWidget {
       time: '10:00 a. m.',
       title: 'Laboratorio Flutter',
       location: 'Aula 301',
-      color: Color(0xFFC85722),
+      color: Color(0xFFD74B1F),
       icon: Icons.laptop_mac_rounded,
+      backgroundImage: 'assets/images/event_red_eyes.png',
     ),
     CalendarEvent(
       day: '12',
@@ -27,8 +28,9 @@ class CalendarScreen extends StatelessWidget {
       time: '2:30 p. m.',
       title: 'Exposición de proyecto',
       location: 'Aula 201',
-      color: Color(0xFF13594C),
+      color: Color(0xFF6D2CB3),
       icon: Icons.groups_2_outlined,
+      backgroundImage: 'assets/images/event_purple_eyes.png',
     ),
     CalendarEvent(
       day: '21',
@@ -36,8 +38,9 @@ class CalendarScreen extends StatelessWidget {
       time: '11:59 p. m.',
       title: 'Entrega de laboratorio',
       location: 'Plataforma virtual',
-      color: Color(0xFF9D7B58),
+      color: Color(0xFFB57C18),
       icon: Icons.description_outlined,
+      backgroundImage: 'assets/images/event_golden_eyes.png',
     ),
   ];
 

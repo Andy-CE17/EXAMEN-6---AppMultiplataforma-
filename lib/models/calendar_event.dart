@@ -9,6 +9,7 @@ class CalendarEvent {
     required this.location,
     required this.color,
     required this.icon,
+    required this.backgroundImage,
   });
 
   final String day;
@@ -18,4 +19,5 @@ class CalendarEvent {
   final String location;
   final Color color;
   final IconData icon;
+  final String backgroundImage;
 }
