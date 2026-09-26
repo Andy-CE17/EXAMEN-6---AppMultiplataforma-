@@ -69,13 +69,13 @@ class CalendarGrid extends StatelessWidget {
               fit: BoxFit.cover,
               alignment: Alignment.center,
               colorFilter: ColorFilter.mode(
-                const Color(0xFF071E19).withValues(alpha: .4),
+                const Color(0xFF080711).withValues(alpha: .67),
                 BlendMode.darken,
               ),
             ),
             borderRadius: BorderRadius.circular(compact ? 16 : 22),
             border: Border.all(
-              color: Colors.white.withValues(alpha: .62),
+              color: const Color(0xFFBFA6D8).withValues(alpha: .6),
               width: 1.25,
             ),
             boxShadow: [
@@ -120,9 +120,9 @@ class CalendarGrid extends StatelessWidget {
                         isOutsideMonth: isOutsideMonth,
                         isSelected: day == 12 && !isOutsideMonth,
                         markerColor: switch (day) {
-                          5 => AppColors.forestLight,
-                          12 => AppColors.terracotta,
-                          21 => AppColors.terracotta,
+                          5 => const Color(0xFFFF681F),
+                          12 => const Color(0xFF4A1595),
+                          21 => const Color(0xFFFFC21C),
                           _ => null,
                         },
                         compact: compact,
@@ -163,7 +163,14 @@ class _CalendarDay extends StatelessWidget {
           width: compact ? 33 : 42,
           height: compact ? 27 : 39,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.forest : Colors.transparent,
+            color: isSelected ? null : Colors.transparent,
+            gradient: isSelected
+                ? const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF7345FF), Color(0xFF8D39E8)],
+                  )
+                : null,
             borderRadius: BorderRadius.circular(compact ? 9 : 12),
             boxShadow: isSelected
                 ? [

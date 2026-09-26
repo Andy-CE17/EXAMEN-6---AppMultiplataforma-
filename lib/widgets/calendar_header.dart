@@ -14,16 +14,35 @@ class CalendarHeader extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
+            child: Image.asset(
+              'assets/images/event_red_eyes.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.centerRight,
+            ),
+          ),
+          Positioned.fill(
             child: ClipPath(
-              clipper: const _HeaderShapeClipper(),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xFF17483F), AppColors.forestDark],
-                    stops: [0, .88],
-                  ),
+              clipper: const _GoldenHeaderClipper(),
+              child: Image.asset(
+                'assets/images/event_golden_eyes.png',
+                fit: BoxFit.cover,
+                alignment: Alignment.centerRight,
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    const Color(0xFF050812).withValues(alpha: .98),
+                    const Color(0xFF080B19).withValues(alpha: .9),
+                    const Color(0xFF130D20).withValues(alpha: .28),
+                    Colors.black.withValues(alpha: .08),
+                  ],
+                  stops: const [0, .38, .68, 1],
                 ),
               ),
             ),
@@ -81,15 +100,25 @@ class CalendarHeader extends StatelessWidget {
                     Container(
                       width: compact ? 32 : 46,
                       height: compact ? 32 : 46,
-                      decoration: BoxDecoration(
-                        color: AppColors.cream,
+                      padding: EdgeInsets.all(compact ? 1 : 1.5),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xFFFF8A1E), Color(0xFF9A3BFF)],
+                        ),
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Icon(
-                        Icons.person_rounded,
-                        color: AppColors.forest,
-                        size: compact ? 22 : 30,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF111019),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.person_rounded,
+                          color: AppColors.white,
+                          size: compact ? 22 : 30,
+                        ),
                       ),
                     ),
                   ],
@@ -105,14 +134,25 @@ class CalendarHeader extends StatelessWidget {
                     letterSpacing: -.8,
                   ),
                 ),
-                Text(
-                  '2026',
-                  style: TextStyle(
-                    color: AppColors.terracotta,
-                    fontSize: compact ? 36 : 52,
-                    height: 1.08,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.5,
+                ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [
+                      Color(0xFFFF681F),
+                      Color(0xFFFF387B),
+                      Color(0xFF7B3DFF),
+                      Color(0xFFFFCB26),
+                    ],
+                  ).createShader(bounds),
+                  child: Text(
+                    '2026',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: compact ? 36 : 52,
+                      height: 1.08,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.5,
+                    ),
                   ),
                 ),
                 SizedBox(height: compact ? 4 : 10),
@@ -133,29 +173,16 @@ class CalendarHeader extends StatelessWidget {
   }
 }
 
-class _HeaderShapeClipper extends CustomClipper<Path> {
-  const _HeaderShapeClipper();
+class _GoldenHeaderClipper extends CustomClipper<Path> {
+  const _GoldenHeaderClipper();
 
   @override
   Path getClip(Size size) {
     return Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width * .64, 0)
-      ..cubicTo(
-        size.width * .64,
-        size.height * .2,
-        size.width * .6,
-        size.height * .42,
-        size.width * .54,
-        size.height * .66,
-      )
-      ..quadraticBezierTo(
-        size.width * .49,
-        size.height,
-        size.width * .31,
-        size.height,
-      )
-      ..lineTo(0, size.height)
+      ..moveTo(size.width, size.height * .28)
+      ..lineTo(size.width, size.height)
+      ..lineTo(size.width * .37, size.height)
+      ..lineTo(size.width * .64, size.height * .52)
       ..close();
   }
 

@@ -21,6 +21,7 @@ class EventCard extends StatelessWidget {
           alignment: Alignment.center,
         ),
         borderRadius: BorderRadius.circular(compact ? 14 : 18),
+        border: Border.all(color: event.color.withValues(alpha: .72), width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: .22),
@@ -39,10 +40,10 @@ class EventCard extends StatelessWidget {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    AppColors.cream.withValues(alpha: .96),
-                    AppColors.cream.withValues(alpha: .86),
-                    AppColors.cream.withValues(alpha: .46),
-                    Colors.transparent,
+                    const Color(0xFF070810).withValues(alpha: .97),
+                    const Color(0xFF090A13).withValues(alpha: .88),
+                    const Color(0xFF0A0911).withValues(alpha: .48),
+                    Colors.black.withValues(alpha: .08),
                   ],
                   stops: const [0, .36, .68, 1],
                 ),
@@ -104,7 +105,7 @@ class EventCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: AppColors.ink,
+                          color: AppColors.white,
                           fontSize: compact ? 13 : 16,
                           height: 1.1,
                           fontWeight: FontWeight.w700,
@@ -125,10 +126,10 @@ class EventCard extends StatelessWidget {
                   height: compact ? 50 : 70,
                   margin: EdgeInsets.only(right: compact ? 8 : 12),
                   decoration: BoxDecoration(
-                    color: AppColors.cream.withValues(alpha: .82),
+                    color: const Color(0xFF090910).withValues(alpha: .76),
                     borderRadius: BorderRadius.circular(compact ? 12 : 16),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: .45),
+                      color: event.color.withValues(alpha: .72),
                     ),
                   ),
                   child: Icon(
@@ -171,7 +172,7 @@ class _DetailLine extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: AppColors.mutedInk,
+              color: Colors.white.withValues(alpha: .72),
               fontSize: compact ? 11 : 14,
               height: 1,
               fontWeight: FontWeight.w500,

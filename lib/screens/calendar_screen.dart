@@ -56,7 +56,15 @@ class CalendarScreen extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.forestDark.withValues(alpha: .27),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                const Color(0xFF070914).withValues(alpha: .62),
+                Colors.black.withValues(alpha: .3),
+                const Color(0xFF2B1704).withValues(alpha: .42),
+              ],
+            ),
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -322,7 +330,7 @@ class _EventsTitle extends StatelessWidget {
         Text(
           'Ver todos',
           style: TextStyle(
-            color: AppColors.white,
+            color: const Color(0xFFFF681F),
             fontSize: compact ? 11 : 14,
             fontWeight: FontWeight.w500,
           ),
@@ -330,7 +338,7 @@ class _EventsTitle extends StatelessWidget {
         const SizedBox(width: 4),
         Icon(
           Icons.arrow_forward_rounded,
-          color: AppColors.white,
+          color: const Color(0xFFFF681F),
           size: compact ? 15 : 19,
         ),
       ],

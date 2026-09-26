@@ -16,9 +16,9 @@ class CalendarBottomNav extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            AppColors.cream.withValues(alpha: .98),
-            Colors.white.withValues(alpha: .93),
-            AppColors.cream.withValues(alpha: .98),
+            const Color(0xFF160B1D).withValues(alpha: .97),
+            const Color(0xFF080A10).withValues(alpha: .98),
+            const Color(0xFF27200B).withValues(alpha: .95),
           ],
         ),
         borderRadius: BorderRadius.vertical(
@@ -31,6 +31,10 @@ class CalendarBottomNav extends StatelessWidget {
             offset: const Offset(0, -5),
           ),
         ],
+        border: Border.all(
+          color: const Color(0xFFFF9A18).withValues(alpha: .78),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
@@ -75,8 +79,15 @@ class _NavItem extends StatelessWidget {
       child: Container(
         height: double.infinity,
         decoration: selected
-            ? const BoxDecoration(
-                color: AppColors.forest,
+            ? BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    const Color(0xFF3B1427).withValues(alpha: .82),
+                    const Color(0xFF110A17).withValues(alpha: .92),
+                  ],
+                ),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(58),
                   bottomRight: Radius.circular(58),
@@ -90,13 +101,17 @@ class _NavItem extends StatelessWidget {
             Icon(
               icon,
               size: compact ? 22 : 29,
-              color: selected ? AppColors.white : AppColors.mutedInk,
+              color: selected
+                  ? const Color(0xFFFF681F)
+                  : Colors.white.withValues(alpha: .62),
             ),
             SizedBox(height: compact ? 2 : 4),
             Text(
               label,
               style: TextStyle(
-                color: selected ? AppColors.white : AppColors.mutedInk,
+                color: selected
+                    ? const Color(0xFFFF7A24)
+                    : Colors.white.withValues(alpha: .7),
                 fontSize: compact ? 10 : 13,
                 fontWeight: FontWeight.w500,
               ),
