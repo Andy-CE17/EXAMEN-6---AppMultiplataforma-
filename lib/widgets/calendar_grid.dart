@@ -62,14 +62,16 @@ class CalendarGrid extends StatelessWidget {
             compact ? 7 : 14,
           ),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                const Color(0xFF24322D).withValues(alpha: .68),
-                const Color(0xFF4A5148).withValues(alpha: .58),
-                const Color(0xFF9A846D).withValues(alpha: .48),
-              ],
+            image: DecorationImage(
+              image: const AssetImage(
+                'assets/images/calendar_panel_background.png',
+              ),
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+              colorFilter: ColorFilter.mode(
+                const Color(0xFF071E19).withValues(alpha: .4),
+                BlendMode.darken,
+              ),
             ),
             borderRadius: BorderRadius.circular(compact ? 16 : 22),
             border: Border.all(
