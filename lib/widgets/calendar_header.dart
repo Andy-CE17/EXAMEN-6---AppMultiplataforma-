@@ -13,10 +13,11 @@ class CalendarHeader extends StatelessWidget {
       height: compact ? 184 : 300,
       child: Stack(
         children: [
+          const Positioned.fill(child: ColoredBox(color: Color(0xFF050711))),
           Positioned.fill(
             child: Image.asset(
               'assets/images/event_red_eyes.png',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               alignment: Alignment.centerRight,
             ),
           ),
@@ -25,11 +26,12 @@ class CalendarHeader extends StatelessWidget {
               clipper: const _GoldenHeaderClipper(),
               child: Image.asset(
                 'assets/images/event_golden_eyes.png',
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 alignment: Alignment.centerRight,
               ),
             ),
           ),
+          const Positioned.fill(child: CustomPaint(painter: _HeaderLines())),
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -51,7 +53,7 @@ class CalendarHeader extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(
               compact ? 20 : 26,
               compact ? 9 : 18,
-              compact ? 20 : 26,
+              compact ? 24 : 26,
               compact ? 3 : 10,
             ),
             child: Column(
@@ -188,4 +190,41 @@ class _GoldenHeaderClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
+
+class _HeaderLines extends CustomPainter {
+  const _HeaderLines();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final purpleGlow = Paint()
+      ..color = const Color(0xFFAE35FF).withValues(alpha: .34)
+      ..strokeWidth = 5
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 7);
+    final purpleLine = Paint()
+      ..color = const Color(0xFFC348FF)
+      ..strokeWidth = 1.25;
+    final orangeGlow = Paint()
+      ..color = const Color(0xFFFF681F).withValues(alpha: .35)
+      ..strokeWidth = 4
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+    final orangeLine = Paint()
+      ..color = const Color(0xFFFF7B21)
+      ..strokeWidth = 1;
+
+    final purpleStart = Offset(size.width * .36, size.height * .92);
+    final purpleEnd = Offset(size.width, size.height * .28);
+    canvas
+      ..drawLine(purpleStart, purpleEnd, purpleGlow)
+      ..drawLine(purpleStart, purpleEnd, purpleLine);
+
+    final orangeStart = Offset(size.width * .52, 0);
+    final orangeEnd = Offset(size.width * .36, size.height * .5);
+    canvas
+      ..drawLine(orangeStart, orangeEnd, orangeGlow)
+      ..drawLine(orangeStart, orangeEnd, orangeLine);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
