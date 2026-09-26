@@ -60,26 +60,32 @@ class CalendarScreen extends StatelessWidget {
               final showPhoneFrame = kIsWeb
                   ? constraints.maxWidth >= 420 && constraints.maxHeight >= 500
                   : constraints.maxWidth >= 560 && constraints.maxHeight >= 650;
-              const content = _CalendarContent(events: _events);
-
               if (!showPhoneFrame) {
-                return content;
+                return const _CalendarContent(events: _events);
               }
 
-              final phoneWidth = (constraints.maxWidth - 56)
-                  .clamp(390, 500)
+              final phoneHeight = (constraints.maxHeight - 28)
+                  .clamp(460, 880)
                   .toDouble();
-              final phoneHeight = (phoneWidth * 1.82)
-                  .clamp(760, 920)
+              final widthFromHeight = phoneHeight * .54;
+              final maximumWidth = (constraints.maxWidth - 64)
+                  .clamp(350, 460)
                   .toDouble();
+              final phoneWidth = widthFromHeight < maximumWidth
+                  ? widthFromHeight
+                  : maximumWidth;
 
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 28),
-                child: Center(
-                  child: _PhoneFrame(
-                    width: phoneWidth,
-                    height: phoneHeight,
-                    child: content,
+              return Center(
+                child: _PhoneFrame(
+                  width: phoneWidth,
+                  height: phoneHeight,
+                  child: const FittedBox(
+                    fit: BoxFit.contain,
+                    child: SizedBox(
+                      width: 376,
+                      height: 720,
+                      child: _CalendarContent(events: _events, compact: true),
+                    ),
                   ),
                 ),
               );
@@ -222,12 +228,38 @@ class _SideButton extends StatelessWidget {
 }
 
 class _CalendarContent extends StatelessWidget {
-  const _CalendarContent({required this.events});
+  const _CalendarContent({required this.events, this.compact = false});
 
   final List<CalendarEvent> events;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
+    if (compact) {
+      return Column(
+        children: [
+          const CalendarHeader(compact: true),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(14, 6, 14, 7),
+              child: Column(
+                children: [
+                  const CalendarGrid(compact: true),
+                  const SizedBox(height: 7),
+                  const _EventsTitle(compact: true),
+                  const SizedBox(height: 5),
+                  ...events.map(
+                    (event) => EventCard(event: event, compact: true),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const CalendarBottomNav(compact: true),
+        ],
+      );
+    }
+
     return SafeArea(
       top: false,
       child: Column(
@@ -262,11 +294,13 @@ class _CalendarContent extends StatelessWidget {
 }
 
 class _EventsTitle extends StatelessWidget {
-  const _EventsTitle();
+  const _EventsTitle({this.compact = false});
+
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
         Expanded(
           child: Text(
@@ -275,23 +309,27 @@ class _EventsTitle extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: AppColors.white,
-              fontSize: 20,
+              fontSize: compact ? 16 : 20,
               fontWeight: FontWeight.w700,
               letterSpacing: -.3,
             ),
           ),
         ),
-        SizedBox(width: 12),
+        SizedBox(width: compact ? 8 : 12),
         Text(
           'Ver todos',
           style: TextStyle(
             color: AppColors.white,
-            fontSize: 14,
+            fontSize: compact ? 11 : 14,
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(width: 4),
-        Icon(Icons.arrow_forward_rounded, color: AppColors.white, size: 19),
+        const SizedBox(width: 4),
+        Icon(
+          Icons.arrow_forward_rounded,
+          color: AppColors.white,
+          size: compact ? 15 : 19,
+        ),
       ],
     );
   }

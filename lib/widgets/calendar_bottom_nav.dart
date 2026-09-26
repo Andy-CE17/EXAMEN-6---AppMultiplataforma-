@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 class CalendarBottomNav extends StatelessWidget {
-  const CalendarBottomNav({super.key});
+  const CalendarBottomNav({super.key, this.compact = false});
+
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 94,
+      height: compact ? 68 : 94,
       decoration: BoxDecoration(
         color: AppColors.cream.withValues(alpha: .96),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(38)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(compact ? 28 : 38),
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: .2),
@@ -20,15 +24,24 @@ class CalendarBottomNav extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         children: [
           _NavItem(
             icon: Icons.calendar_month_rounded,
             label: 'Calendario',
             selected: true,
+            compact: compact,
           ),
-          _NavItem(icon: Icons.format_list_bulleted_rounded, label: 'Eventos'),
-          _NavItem(icon: Icons.person_outline_rounded, label: 'Perfil'),
+          _NavItem(
+            icon: Icons.format_list_bulleted_rounded,
+            label: 'Eventos',
+            compact: compact,
+          ),
+          _NavItem(
+            icon: Icons.person_outline_rounded,
+            label: 'Perfil',
+            compact: compact,
+          ),
         ],
       ),
     );
@@ -40,11 +53,13 @@ class _NavItem extends StatelessWidget {
     required this.icon,
     required this.label,
     this.selected = false,
+    required this.compact,
   });
 
   final IconData icon;
   final String label;
   final bool selected;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -66,23 +81,23 @@ class _NavItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 29,
+              size: compact ? 22 : 29,
               color: selected ? AppColors.white : AppColors.mutedInk,
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: compact ? 2 : 4),
             Text(
               label,
               style: TextStyle(
                 color: selected ? AppColors.white : AppColors.mutedInk,
-                fontSize: 13,
+                fontSize: compact ? 10 : 13,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: compact ? 2 : 5),
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              width: selected ? 55 : 0,
-              height: 3,
+              width: selected ? (compact ? 40 : 55) : 0,
+              height: compact ? 2 : 3,
               decoration: BoxDecoration(
                 color: AppColors.terracotta,
                 borderRadius: BorderRadius.circular(8),

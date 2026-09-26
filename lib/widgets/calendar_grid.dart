@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 class CalendarGrid extends StatelessWidget {
-  const CalendarGrid({super.key});
+  const CalendarGrid({super.key, this.compact = false});
+
+  final bool compact;
 
   static const _weekDays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
   static const _days = [
@@ -49,14 +51,19 @@ class CalendarGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(compact ? 16 : 22),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
         child: Container(
-          padding: const EdgeInsets.fromLTRB(14, 18, 14, 14),
+          padding: EdgeInsets.fromLTRB(
+            compact ? 10 : 14,
+            compact ? 9 : 18,
+            compact ? 10 : 14,
+            compact ? 7 : 14,
+          ),
           decoration: BoxDecoration(
             color: const Color(0xFF29342F).withValues(alpha: .57),
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(compact ? 16 : 22),
             border: Border.all(
               color: Colors.white.withValues(alpha: .5),
               width: 1.2,
@@ -71,9 +78,9 @@ class CalendarGrid extends StatelessWidget {
                         child: Center(
                           child: Text(
                             day,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppColors.white,
-                              fontSize: 15,
+                              fontSize: compact ? 12 : 15,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -82,7 +89,7 @@ class CalendarGrid extends StatelessWidget {
                     )
                     .toList(),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: compact ? 4 : 10),
               ...List.generate(5, (weekIndex) {
                 final start = weekIndex * 7;
                 return Row(
@@ -101,6 +108,7 @@ class CalendarGrid extends StatelessWidget {
                           21 => AppColors.terracotta,
                           _ => null,
                         },
+                        compact: compact,
                       ),
                     );
                   }),
@@ -120,24 +128,26 @@ class _CalendarDay extends StatelessWidget {
     required this.isOutsideMonth,
     required this.isSelected,
     required this.markerColor,
+    required this.compact,
   });
 
   final int day;
   final bool isOutsideMonth;
   final bool isSelected;
   final Color? markerColor;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 43,
+      height: compact ? 29 : 43,
       child: Center(
         child: Container(
-          width: 42,
-          height: 39,
+          width: compact ? 33 : 42,
+          height: compact ? 27 : 39,
           decoration: BoxDecoration(
             color: isSelected ? AppColors.forest : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(compact ? 9 : 12),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
@@ -157,7 +167,7 @@ class _CalendarDay extends StatelessWidget {
                   color: isOutsideMonth
                       ? Colors.white.withValues(alpha: .35)
                       : AppColors.white,
-                  fontSize: 17,
+                  fontSize: compact ? 13 : 17,
                   fontWeight: isSelected || day == 21
                       ? FontWeight.w700
                       : FontWeight.w500,
@@ -165,10 +175,10 @@ class _CalendarDay extends StatelessWidget {
               ),
               if (markerColor != null)
                 Positioned(
-                  bottom: 1,
+                  bottom: compact ? 0 : 1,
                   child: Container(
-                    width: 7,
-                    height: 7,
+                    width: compact ? 5 : 7,
+                    height: compact ? 5 : 7,
                     decoration: BoxDecoration(
                       color: markerColor,
                       shape: BoxShape.circle,

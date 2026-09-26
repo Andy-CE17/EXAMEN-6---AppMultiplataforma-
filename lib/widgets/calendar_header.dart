@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 class CalendarHeader extends StatelessWidget {
-  const CalendarHeader({super.key});
+  const CalendarHeader({super.key, this.compact = false});
+
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
+      height: compact ? 184 : 300,
       child: Stack(
         children: [
           Positioned(
@@ -30,93 +32,98 @@ class CalendarHeader extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(26, 18, 26, 10),
+            padding: EdgeInsets.fromLTRB(
+              compact ? 20 : 26,
+              compact ? 12 : 18,
+              compact ? 20 : 26,
+              compact ? 6 : 10,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       '9:41',
                       style: TextStyle(
                         color: AppColors.white,
-                        fontSize: 17,
+                        fontSize: compact ? 14 : 17,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const Spacer(),
                     Icon(
                       Icons.signal_cellular_alt_rounded,
-                      size: 18,
+                      size: compact ? 14 : 18,
                       color: Colors.white.withValues(alpha: .9),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: compact ? 6 : 8),
                     Icon(
                       Icons.wifi_rounded,
-                      size: 18,
+                      size: compact ? 14 : 18,
                       color: Colors.white.withValues(alpha: .9),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: compact ? 6 : 8),
                     Icon(
                       Icons.battery_full_rounded,
-                      size: 20,
+                      size: compact ? 16 : 20,
                       color: Colors.white.withValues(alpha: .9),
                     ),
                   ],
                 ),
-                const SizedBox(height: 34),
+                SizedBox(height: compact ? 10 : 34),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.menu_rounded,
-                      size: 34,
+                      size: compact ? 27 : 34,
                       color: AppColors.white,
                     ),
                     const Spacer(),
                     Container(
-                      width: 46,
-                      height: 46,
+                      width: compact ? 34 : 46,
+                      height: compact ? 34 : 46,
                       decoration: BoxDecoration(
                         color: AppColors.cream,
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.person_rounded,
                         color: AppColors.forest,
-                        size: 30,
+                        size: compact ? 22 : 30,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                const Text(
+                SizedBox(height: compact ? 5 : 12),
+                Text(
                   'Septiembre',
                   style: TextStyle(
                     color: AppColors.white,
-                    fontSize: 38,
+                    fontSize: compact ? 28 : 38,
                     height: 1,
                     fontWeight: FontWeight.w500,
                     letterSpacing: -.8,
                   ),
                 ),
-                const Text(
+                Text(
                   '2026',
                   style: TextStyle(
                     color: AppColors.terracotta,
-                    fontSize: 52,
+                    fontSize: compact ? 38 : 52,
                     height: 1.08,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.5,
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: compact ? 4 : 10),
                 Text(
                   'Tus planes, un paso más cerca',
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: .75),
-                    fontSize: 17,
+                    fontSize: compact ? 13 : 17,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

@@ -4,15 +4,16 @@ import '../models/calendar_event.dart';
 import '../theme/app_colors.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard({super.key, required this.event});
+  const EventCard({super.key, required this.event, this.compact = false});
 
   final CalendarEvent event;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 104,
-      margin: const EdgeInsets.only(bottom: 12),
+      height: compact ? 70 : 104,
+      margin: EdgeInsets.only(bottom: compact ? 6 : 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
@@ -23,7 +24,7 @@ class EventCard extends StatelessWidget {
             AppColors.cream.withValues(alpha: .88),
           ],
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(compact ? 14 : 18),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: .22),
@@ -35,9 +36,9 @@ class EventCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Row(
         children: [
-          Container(width: 5, color: event.color),
+          Container(width: compact ? 4 : 5, color: event.color),
           Container(
-            width: 88,
+            width: compact ? 66 : 88,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -50,26 +51,26 @@ class EventCard extends StatelessWidget {
               children: [
                 Text(
                   event.day,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 31,
+                    fontSize: compact ? 23 : 31,
                     height: 1,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: compact ? 2 : 4),
                 Text(
                   event.month,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 15,
+                    fontSize: compact ? 11 : 15,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: compact ? 9 : 14),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -79,37 +80,43 @@ class EventCard extends StatelessWidget {
                   icon: Icons.schedule_rounded,
                   label: event.time,
                   color: event.color,
+                  compact: compact,
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: compact ? 3 : 5),
                 Text(
                   event.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.ink,
-                    fontSize: 16,
+                    fontSize: compact ? 13 : 16,
                     height: 1.1,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: compact ? 3 : 6),
                 _DetailLine(
                   icon: Icons.location_on_rounded,
                   label: event.location,
                   color: event.color,
+                  compact: compact,
                 ),
               ],
             ),
           ),
           Container(
-            width: 64,
-            height: 70,
-            margin: const EdgeInsets.only(right: 12),
+            width: compact ? 48 : 64,
+            height: compact ? 50 : 70,
+            margin: EdgeInsets.only(right: compact ? 8 : 12),
             decoration: BoxDecoration(
               color: Colors.white.withValues(alpha: .45),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(compact ? 12 : 16),
             ),
-            child: Icon(event.icon, size: 33, color: event.color),
+            child: Icon(
+              event.icon,
+              size: compact ? 24 : 33,
+              color: event.color,
+            ),
           ),
         ],
       ),
@@ -122,26 +129,28 @@ class _DetailLine extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.color,
+    required this.compact,
   });
 
   final IconData icon;
   final String label;
   final Color color;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: color),
-        const SizedBox(width: 6),
+        Icon(icon, size: compact ? 14 : 18, color: color),
+        SizedBox(width: compact ? 4 : 6),
         Expanded(
           child: Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.mutedInk,
-              fontSize: 14,
+              fontSize: compact ? 11 : 14,
               height: 1,
               fontWeight: FontWeight.w500,
             ),
