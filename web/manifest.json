@@ -1,11 +1,11 @@
 {
-    "name": "examen_6",
-    "short_name": "examen_6",
+    "name": "Mi calendario académico",
+    "short_name": "Calendario",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#071E19",
+    "theme_color": "#0B4439",
+    "description": "Calendario académico de septiembre de 2026 creado con Flutter.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,17 +1,33 @@
-# examen_6
+# Examen 6 · Calendario Flutter
 
-A new Flutter project.
+Diseño visual de un calendario académico para septiembre de 2026. La interfaz
+está construida principalmente con `Row` y `Column`, siguiendo los requisitos
+del laboratorio y adaptándose a web, Android y Windows.
 
-## Getting Started
+## Contenido
 
-This project is a starting point for a Flutter application.
+- Encabezado con mes, año y mensaje principal.
+- Cuadrícula de cinco semanas con siete columnas.
+- Días 5, 12 y 21 marcados como fechas con eventos.
+- Día 12 seleccionado visualmente.
+- Tres tarjetas de eventos académicos.
+- Barra de navegación inferior.
+- Fondo original y paneles con efecto translúcido.
 
-A few resources to get you started if this is your first Flutter project:
+## Ejecutar en la web
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```bash
+flutter pub get
+flutter run -d chrome
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Verificaciones
+
+```bash
+flutter analyze
+flutter test
+flutter build web
+```
+
+El proyecto no necesita base de datos ni servicios externos. Todo el contenido
+es estático porque el objetivo del examen es evaluar el diseño visual.
