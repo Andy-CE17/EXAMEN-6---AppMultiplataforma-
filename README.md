@@ -1,33 +1,36 @@
-# Examen 6 · Calendario Flutter
+# Calendario académico en Flutter
 
-Diseño visual de un calendario académico para septiembre de 2026. La interfaz
-está construida principalmente con `Row` y `Column`, siguiendo los requisitos
-del laboratorio y adaptándose a web, Android y Windows.
+Interfaz visual de un calendario académico para septiembre de 2026, desarrollada principalmente con `Row` y `Column`.
 
-## Contenido
+## Características
 
-- Encabezado con mes, año y mensaje principal.
-- Cuadrícula de cinco semanas con siete columnas.
-- Días 5, 12 y 21 marcados como fechas con eventos.
-- Día 12 seleccionado visualmente.
-- Tres tarjetas de eventos académicos.
-- Barra de navegación inferior.
-- Fondo original y paneles con efecto translúcido.
+- Calendario mensual con fecha seleccionada e indicadores de eventos.
+- Tres tarjetas con fecha, hora, ubicación e iconos.
+- Diseño adaptable para Flutter Web.
+- Componentes organizados en modelos, pantallas y widgets reutilizables.
 
-## Ejecutar en la web
+## Estructura principal
+
+```text
+lib/
+├── models/
+├── screens/
+├── theme/
+├── widgets/
+└── main.dart
+```
+
+## Ejecución
 
 ```bash
 flutter pub get
 flutter run -d chrome
 ```
 
-## Verificaciones
+## Validación
 
 ```bash
 flutter analyze
 flutter test
 flutter build web
 ```
-
-El proyecto no necesita base de datos ni servicios externos. Todo el contenido
-es estático porque el objetivo del examen es evaluar el diseño visual.
