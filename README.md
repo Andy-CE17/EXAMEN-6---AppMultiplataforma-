@@ -9,6 +9,10 @@ Interfaz visual de un calendario académico para septiembre de 2026, desarrollad
 - Diseño adaptable para Flutter Web.
 - Componentes organizados en modelos, pantallas y widgets reutilizables.
 
+## Resultado final
+
+![Resultado final del calendario académico](docs/resultado-final.jpg)
+
 ## Estructura principal
 
 ```text
